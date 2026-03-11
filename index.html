@@ -36,39 +36,25 @@
             100% { transform: rotate(360deg); }
         }
     </style>
-    <script>
-        // Extract the authorization code from the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        const error = urlParams.get('error');
-        const errorDescription = urlParams.get('error_description');
-        
-        if (code) {
-            // Redirect to the custom URL scheme with the code
-            console.log('Redirecting with code:', code);
-            window.location.href = `myapp://callback?code=${encodeURIComponent(code)}`;
-            
-            // Fallback message if redirect doesn't work
-            setTimeout(() => {
-                document.getElementById('message').innerHTML = 
-                    '<p>If you are not redirected automatically, please close this window and return to the app.</p>';
-            }, 2000);
-        } else if (error) {
-            // Handle error case
-            console.error('OAuth error:', error, errorDescription);
-            window.location.href = `myapp://callback?error=${encodeURIComponent(error)}`;
-            
-            // Show error message
-            setTimeout(() => {
-                document.getElementById('message').innerHTML = 
-                    `<p>Error: ${error}</p><p>${errorDescription || ''}</p>`;
-            }, 1000);
-        } else {
-            // No code or error received
-            document.getElementById('message').innerHTML = 
-                '<p>No authorization code received. Please try again.</p>';
-        }
-    </script>
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get('code');
+  const error = urlParams.get('error');
+  const errorDescription = urlParams.get('error_description');
+  const state = urlParams.get('state');
+
+  if (code) {
+    window.location.href =
+      `quicknotion://oauth?code=${encodeURIComponent(code)}&state=${encodeURIComponent(state || '')}`;
+  } else if (error) {
+    window.location.href =
+      `quicknotion://oauth?error=${encodeURIComponent(error)}&error_description=${encodeURIComponent(errorDescription || '')}`;
+  } else {
+    document.getElementById('message').innerHTML =
+      '<p>No authorization code received. Please try again.</p>';
+  }
+</script>
+
 </head>
 <body>
     <div class="container">
