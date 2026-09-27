@@ -45,10 +45,10 @@
 
   if (code) {
     window.location.href =
-      `quicknotion://oauth?code=${encodeURIComponent(code)}&state=${encodeURIComponent(state || '')}`;
+      `pagebridge://oauth?code=${encodeURIComponent(code)}&state=${encodeURIComponent(state || '')}`;
   } else if (error) {
     window.location.href =
-      `quicknotion://oauth?error=${encodeURIComponent(error)}&error_description=${encodeURIComponent(errorDescription || '')}`;
+      `pagebridge://oauth?error=${encodeURIComponent(error)}&error_description=${encodeURIComponent(errorDescription || '')}`;
   } else {
     document.getElementById('message').innerHTML =
       '<p>No authorization code received. Please try again.</p>';
